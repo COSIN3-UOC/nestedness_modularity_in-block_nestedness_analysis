@@ -1,4 +1,4 @@
-# Structural Analysis N,Q I
+# Structural Analysis Nestedness, Modularity and In-block
 
 To perform structural analysis in binary unipartite and bipartite networks by means of nestedness, as defined by Solé-Ribalta et al, PRE 2018 (https://doi.org/10.1103/PhysRevE.97.062302), in-block nested and modularity.
     
