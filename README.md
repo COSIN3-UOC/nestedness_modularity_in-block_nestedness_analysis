@@ -59,4 +59,5 @@ g++ -O3 -Wall -shared -std=c++11 -undefined dynamic_lookup `python -m pybind11 -
 
 MJ Palazzi, J Borge-Holthoefer, CJ Tessone and A Solé-Ribalta. Macro- and mesoscale pattern interdependencies in complex networks. J. R. Soc. Interface, 16, 159, 20190553 (2019). DOI: [10.1098/rsif.2019.0553](https://doi.org/10.1098/rsif.2019.0553)
 
-MJ Palazzi, A Solé-Ribalta, V Calleja-Solanas, CA Plata, S Meloni, S Suweis and J Borge-Holthoefer. An Ecological Approach to Structural Flexibility in Online Communication Networks. Nature Communications (accepted, 2021).
+MJ Palazzi, A Solé-Ribalta, V Calleja-Solanas, CA Plata, S Meloni, S Suweis and J Borge-Holthoefer. An ecological approach to structural flexibility in online communication systems. Nature Communications, 12, 1941 (2021). DOI: [10.1038/s41467-021-22184-2](https://doi.org/10.1038/s41467-021-22184-2)
+
