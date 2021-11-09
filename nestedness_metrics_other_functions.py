@@ -58,7 +58,7 @@ def spectral_radius(M):
             the bipartite biadjacency matrix
     OUTPUT: 
     - spectral radius.
-    - normalized spectral radius
+  
     """
     #build the adajacency matrix
     r,cl=M.shape
