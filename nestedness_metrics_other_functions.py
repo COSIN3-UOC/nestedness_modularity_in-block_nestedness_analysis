@@ -8,6 +8,67 @@ Created on Wed Sep 20 16:16:57 2017
 #%%
 import numpy as np
 #%%
+#%%
+def NODF(M):
+    '''
+    function to calculate the nestedness by overlap and decreasing fill (NODF).
+    Metric developed by Almeida-Neto et al., 2008.
+
+    Inputs:
+    ----------
+        M: array
+            An matrix to which I want to calculate the NODF
+    
+    output:
+    ----------
+    NODF: number
+        The NODF score for the whole matrix
+    '''
+    rw,cl=M.shape
+    colN=np.zeros((cl,cl))
+    rowN=np.zeros((rw,rw))
+    
+    #Find NODF column score
+    for i in range(cl-1): # at a left position with respect to column j
+      	for j in range(i+1,cl):
+              #if (i!=j):
+            if (np.sum(M[:,i])>np.sum(M[:,j]))&(np.sum(M[:,j])>0): # DF =! to zero, then NP =! to zero
+                colN[i,j]=(M[:,i]*M[:,j]).sum()/(np.sum(M[:,j]))
+    
+#    NODF_COL = (2*np.sum(colN)/(cl*(cl-1)))*100
+    
+    #Find NODF row score
+    for i in range(rw-1): #at an upper position with respect to row j
+        for j in range(i+1,rw):
+            #if (i!=j):
+            if (np.sum(M[i,:])>np.sum(M[j,:]))&(np.sum(M[j,:])>0): # DF =! to zero, then NP =! to zero
+                rowN[i,j]=(M[i,:]*M[j,:]).sum()/(np.sum(M[j,:]))
+    
+#    NODF_ROW = (2*np.sum(rowN)/(rw*(rw-1)))*100
+    
+    #Find NODF
+    NODF=(2*(np.sum(rowN)+np.sum(colN))/(cl*(cl-1) + rw*(rw-1) ))
+    return  NODF
+#%%
+def spectral_radius(M):    
+    """
+    Spectral Radius described in Staniczenko et al., 2013
+    INPUT: 
+        M: array
+            the bipartite biadjacency matrix
+    OUTPUT: 
+    - spectral radius.
+    - normalized spectral radius
+    """
+    #build the adajacency matrix
+    r,cl=M.shape
+    ntotal=r+cl
+    theta_ik=np.zeros((ntotal,ntotal))
+    theta_ik[0:r,r::]=M;
+    theta_ik[r::,0:r]=M.T;  
+    max_eig = max(np.abs(np.linalg.eig(theta_ik)[0].real))
+    return max_eig
+#%%
 def glob_nestnulb(M):
     '''
     function to calculate the nestedness fitness N, a modified version
