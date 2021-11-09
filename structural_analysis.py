@@ -150,16 +150,8 @@ if __name__ == '__main__':
     
     filenames = sorted(glob.glob("results_*.npz"))
     N=[]
-    NODF_=[]
     Q=[]
     I=[]
-    rows=[]
-    cols=[]
-    nodes=[]
-    Q_up=[]
-    Q_down=[]
-    I_up=[]
-    B_approx=[]
     fi=[]
     for f in filenames:
         ff=(os.path.basename(f).split('.npz')[0])
