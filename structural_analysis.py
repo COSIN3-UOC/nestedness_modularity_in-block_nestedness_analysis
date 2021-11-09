@@ -7,7 +7,7 @@ Created on Thu Mar  1 14:55:14 2018
 """
 import numpy as np
 import pandas as pd
-from nestedness_metrics_other_functions import glob_nestnul,glob_nestnulb, from_edges_to_matrix
+from nestedness_metrics_other_functions import from_edges_to_matrix
 import extremal_bi
 import extremal_uni
 import multiprocessing as multi
@@ -18,7 +18,6 @@ def structural_network_analysis(fname):
     '''
     function to perform structural anaylsis in binary unipartite and bipartite networks
     by means of nestedness (as defined in ASR et al, PRE 2018), in-block nested and modularity.
-    Compute the upper and lower bounds for Modularity
         
     The optimization of modularity and in-block nestedness is done employing the extremal optimization
     algorithm.
@@ -47,10 +46,15 @@ def structural_network_analysis(fname):
         
         
         if fname[1]==True: #if the network is bipartite or not
-            #Nestednes
-            nestedness_=glob_nestnulb(M)
             cols_degr=M.sum(axis=0)
             row_degr=M.sum(axis=1)
+            R,C=M.shape #rows and cols
+            #Nestednes
+            # In-block nestedness with B=1
+            Cn_=[np.repeat(1, R),np.repeat(1, C)]
+            max_blockN=max(max(Ci_[0]),max(Ci_[1]))+1
+            lambdasN=extremal_bi.call_lambda_i(M,cols_degr,row_degr,Cn_[1],Cn_[0],max_blockN,True)
+            nestedness_=extremal_bi.calculate_Fitness(M,cols_degr,row_degr,lambdasN[0],lambdasN[1],True)
         
             #Modularity Extremal
             C_=extremal_bi.recursive_step(M,cols_degr,row_degr,.7,3,False)
@@ -65,9 +69,15 @@ def structural_network_analysis(fname):
             I_=extremal_bi.calculate_Fitness(M,cols_degr,row_degr,lambdasI[0],lambdasI[1],True)
             
         else:
-            #Nestednes
-            nestedness_=glob_nestnul(M)
             cols_degr=M.sum(axis=0)
+            row_degr=M.sum(axis=1)
+            R,C=M.shape #rows and cols
+            #Nestednes
+            # IBN with B=1
+            Cn_=np.repeat(1, C).tolist()
+            max_blockN=max(Cn_)+1
+            lambdasN=extremal_uni.call_lambda_i(M,cols_degr,Cn_,max_blockN,True)
+            nestedness_=extremal_uni.calculate_Fitness(M,cols_degr,lambdasN,True) #in-block nestedness value
             
             # Modularity
             C_=extremal_uni.recursive_step(M,cols_degr,.7,3,False) # vector with labels of partitions
