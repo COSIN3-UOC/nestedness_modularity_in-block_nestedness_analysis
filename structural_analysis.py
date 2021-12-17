@@ -52,7 +52,7 @@ def structural_network_analysis(fname):
             #Nestednes
             # In-block nestedness with B=1
             Cn_=[np.repeat(1, R),np.repeat(1, C)]
-            max_blockN=max(max(Ci_[0]),max(Ci_[1]))+1
+            max_blockN=max(max(Cn_[0]),max(Cn_[1]))+1
             lambdasN=extremal_bi.call_lambda_i(M,cols_degr,row_degr,Cn_[1],Cn_[0],max_blockN,True)
             nestedness_=extremal_bi.calculate_Fitness(M,cols_degr,row_degr,lambdasN[0],lambdasN[1],True)
         
