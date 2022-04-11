@@ -1,16 +1,32 @@
 # Structural Analysis Nestedness, Modularity and In-block
 
-To perform structural analysis in binary unipartite and bipartite networks by means of nestedness, as defined by Solé-Ribalta et al, PRE 2018 (https://doi.org/10.1103/PhysRevE.97.062302), in-block nested and modularity.
-    
+This code performs structural analysis in binary unipartite and bipartite networks by means of in-block nestedness
+as defined by Solé-Ribalta et al, PRE 2018 (https://doi.org/10.1103/PhysRevE.97.062302), as well as global nestedness and modularity.
         
 ## Inputs:
        
-1) path-folder =  directory where the network data files are. The data files with .csv file extension. It can be either in edge list or adjacency matrix format with no headers. 
-2) bipartite =  boolean to indicate if "filename" is a bipartite (True) or unipartite (False) network.
-3) edge_data = boolean indicating the format of the data file. Three-column/edge list (True) or matrix format (False).
-## output:
-1) The function return  two .csv files for each generated network containing the label partitions from the Modularity and in-block nestednesss analysis. 
-2) An additional .csv file containing a table with name, ![formula](https://render.githubusercontent.com/render/math?math=\mathcal{N}) value, ![formula](https://render.githubusercontent.com/render/math?math=Q) value, and ![formula](https://render.githubusercontent.com/render/math?math=\mathcal{I}) of value the networks
+1) `path-folder` =  directory where the network data files are. The data files with .csv file extension.
+It can be either in edge list or adjacency matrix format with no headers. 
+2) `bipartite` =  boolean value to indicate if "filename" is a bipartite (True) or unipartite (False) network.
+3) `edge_data` = boolean value indicating the format of the data file. Three-column/edge list (True) or matrix format (False).
+
+## Outputs:
+
+1) A summary file, `data_structures_NQI_results.csv`, containing as many rows as input files found in `path-folder`. 
+ Its columns report for each network analysed the name of its input file, and
+the values of ![formula](https://render.githubusercontent.com/render/math?math=\mathcal{N}),
+![formula](https://render.githubusercontent.com/render/math?math=Q), 
+and ![formula](https://render.githubusercontent.com/render/math?math=\mathcal{I}).
+
+2) As many files as input files with general naming `in-block_partition_<filename>.csv`, where `<filename>` is the extensionless name of the respective input file.
+ Each files are formed by one or two columns, depending whether the network is unipartite or bipartite.
+A column contains the indices of the block each node is assigned to by optimizing the in-block nestedness, following zero indexing.
+Therefore, columns' lengths equal the number of nodes present in the corresponding graph or subgraph.
+As an example for a bipartite network, the i-th value of the column labelled by `rows` (`columns`) 
+indicates the block of the `i-th` node of the subgraph associated to the rows (columns) of the input adjacency matrix.
+**N.B.** block indices are generally not contiguous, namely, the number of blocks does not in principle coincide with the largest block index+1.   
+
+3) Like above, but the general naming is `modularity_partition_<filename>.csv` and partitions are calculated by optimising the modularity.
 	
 If for example we pass bipartite=True and edge_data=True, all the networks we want to analyze have to fulfill such conditions.
 
@@ -25,8 +41,8 @@ Both metrics are computed considering the condition ![formula](https://render.gi
 
 # Modularity and in-block nestedness optimization
 
-The optimization of modularity and in-block nestedness was perform by employing the Extremal optimization algorithm (https://doi.org/10.1103/PhysRevE.72.027104).
-The main code for this function was written in c++ and should be compiled as a file with a .so extension for Python 3.x. This file will be imported to python as a library. 
+The optimization of modularity and in-block nestedness is performed by employing the Extremal optimization algorithm (https://doi.org/10.1103/PhysRevE.72.027104).
+The main code for this function was written in c++ and should be compiled as a file with a .so extension for Python 3.x. This file will be imported in Python as a library. 
 
 This will be possible for MacOS or Linux.
 

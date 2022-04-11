@@ -142,7 +142,11 @@ nc= number of simultaneous processes
 if __name__ == '__main__':
 #    print('parameters')
     parameters=arguments_list_to_pool(sys.argv[1],str_to_bool(sys.argv[2]), str_to_bool(sys.argv[3]))
-    nc=multi.cpu_count()-3
+    n_cpus = multi.cpu_count()
+    if n_cpus > 3:
+        nc = n_cpus - 1
+    else:
+        nc = 1
     pool=multi.Pool(processes=nc)
     pool.map(structural_network_analysis,parameters)
     pool.terminate()
