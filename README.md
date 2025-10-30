@@ -37,7 +37,7 @@ python structural_analysis.py home/User/data/ True False
 ```
 # Nestedness and In-block nestedness
 
-Both metrics are computed considering the condition ![formula](https://render.githubusercontent.com/render/math?math=k_i>=k_j) to compare the paired overlap between pairs of nodes, in contrast with the NODF metrics that considers ![formula](https://render.githubusercontent.com/render/math?math=k_i>k_j)
+Both metrics are computed considering the condition $k_i>=k_j$ to compare the paired overlap between pairs of nodes, in contrast with the NODF metrics that considers $k_i>k_j$
 
 # Modularity and in-block nestedness optimization
 
