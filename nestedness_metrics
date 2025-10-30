@@ -153,32 +153,3 @@ def glob_nestnul(M):
     N=(N_COL)*(2./(cl))
     return N
 #%%
-def from_edges_to_matrix(fname,bipartite=True):
-    '''
-    function to generate the network adjacency matrix given the edge list
-
-    Inputs:n
-    ----------
-        fname: data file
-            The data file containing the edge lists. accepts .csv, .edges, .txt
-    
-    output:
-    ----------
-    matrix: array
-        The numpy array containing the adjacency matrix
-    '''
-    aa=np.loadtxt(fname,dtype='int')
-    if bipartite==True:
-        nodes_cols = int(max(aa[j,1] for j in range(aa.shape[0]))+1)
-        nodes_rows= int(max(aa[j,0] for j in range(aa.shape[0]))+1)
-        matrix=np.zeros((nodes_rows,nodes_cols),dtype='int')
-        for j in range(aa.shape[0]):
-            matrix[aa[j,0],aa[j,1]] = 1
-    else:
-        nodes = int(max(max(aa[j,0], aa[j,1]) for j in range(aa.shape[0]))+1)
-        matrix=np.zeros((nodes,nodes),dtype='int')
-        for j in range(aa.shape[0]):
-            matrix[aa[j,0],aa[j,1]] = 1
-        np.fill_diagonal(matrix, 0)
-        matrix=np.triu(matrix,k=1)+(np.triu(matrix,k=1)).T
-    return matrix
