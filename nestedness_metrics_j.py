@@ -58,7 +58,7 @@ def spectral_radius(M):
         M: array
             the bipartite biadjacency matrix
     OUTPUT: 
-    - spectral radius.
+    - spectral radius, normlaized by sqrt(L) where L is the number of edges.
   
     """
     #build the adajacency matrix
@@ -71,56 +71,6 @@ def spectral_radius(M):
     max_eig = max(np.abs(np.linalg.eig(theta_ik)[0].real))
     return max_eig/np.sqrt(L)
 #%%
-# def glob_nestnulb(M):
-#     '''
-#     function to calculate the nestedness fitness N, a modified version
-#     of Ñ, corrected by a null model
-#     Metric developed by ASR et al, PRE 2018.
-
-#     Inputs:n
-#     ----------
-#         M: array
-#             A matrix to which I want to calculate the N
-    
-#     output:
-#     ----------
-#     N: number
-#         The N score for the whole matrix
-#     '''
-#     rw,cl=M.shape
-#     colN=np.zeros((cl,cl))
-#     rowN=np.zeros((rw,rw))
-#     cols_degr = M.sum(axis=0) # degree of the cols nodes
-#     rows_degr = M.sum(axis=1) # degree of the rows nodes
-    
-#     #Find N col score
-#     for i in range(cl): # at a left position with respect to column j
-#       	for j in range(cl):
-#               if M[i,j]==1:
-#                   if (cols_degr[i]>=cols_degr[j]) & (cols_degr[j]>0): # heaviside
-#                       if (cols_degr[i]==cols_degr[j]):
-#                           colN[i,j]=(np.sum((M[:,i]*M[:,j]),dtype=float)-((cols_degr[i]*cols_degr[j])/rw))/(2*cols_degr[j]) #paired overlap
-#                       else:
-#                           colN[i,j]=(np.sum((M[:,i]*M[:,j]),dtype=float)-((cols_degr[i]*cols_degr[j])/rw))/cols_degr[j]
-        
-#     N_COL = (np.sum(colN,dtype=float)/(cl-1))
-    
-#     for i in range(rw): # at an upper position with respect to row j
-#         for j in range(rw):
-#             if M[i,j]==1:
-#                 if (rows_degr[i]>=rows_degr[j]) & (rows_degr[j]>0): # Heaviside
-#                     if (rows_degr[i]==rows_degr[j]):
-#                         rowN[i,j]=(np.sum((M[i,:]*M[j,:]),dtype=float)-((rows_degr[i]*rows_degr[j])/cl))/(2*rows_degr[j]) #paired overlap
-#                     else:
-#                         rowN[i,j]=(np.sum((M[i,:]*M[j,:]),dtype=float)-((rows_degr[i]*rows_degr[j])/cl))/rows_degr[j] #paired overlap
-
-#     N_ROW = (np.sum(rowN,dtype=float)/(rw-1))
-    
-#     #Find N
-#     N=(N_COL+N_ROW)*(2./(rw+cl))
-#     return N
-#%%
-
 def mathcalN_bipartite(M, equal_weight=1.0):
     """
     Global nestedness fitness N (null-model corrected) for a bipartite adjacency matrix.
